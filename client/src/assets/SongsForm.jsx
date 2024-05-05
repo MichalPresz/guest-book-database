@@ -23,11 +23,11 @@ export default function ContestantForm() {
     <form onSubmit={handleSubmit}>
       <h3>Add a new song</h3>
       <p>Your favourite song</p>
-      <input name="song" placeholder="year" onChange={handleChange} />
+      <input name="song" placeholder="title" onChange={handleChange} />
       <input
         name="title"
         type="text"
-        placeholder="Song"
+        placeholder="user"
         onChange={handleChange}
       />
       <button>Add Song</button>
