@@ -15,26 +15,22 @@ const connectionString = process.env.DATABASE_URL;
 const db = new pg.Pool({ connectionString: connectionString });
 
 app.get("/", (request, response) => {
-  response.json("You are looking at my root route. How roude.");
+  response.json("You are in the server!");
 });
 
-app.get("/contestants", async (request, response) => {
-  const result = await db.query(`SELECT
-  contestants.id,
-  contestants.name,
-  contestants.age,
-  ARRAY_AGG(ingredients.item) AS ingredients
-FROM contestants
-JOIN ingredients_junction ON contestants.id = ingredients_junction.contestant_id
-JOIN ingredients ON ingredients_junction.ingredient_id = ingredients.id
-GROUP BY contestants.id, contestants.name, contestants.age`);
+app.get("/songs", async (request, response) => {
+  const result = await db.query(`SELECT *
+FROM songs`);
   response.json(result.rows);
 });
 
-app.post("/contestant", async (request, response) => {
-  const name = request.body.name;
-  const age = request.body.age;
-  db.query(`INSERT INTO contestants (name, age) VALUES ($1, $2)`, [name, age]);
+app.post("/songs", async (request, response) => {
+  const title = request.body.title;
+  const year = request.body.year;
+  db.query(`INSERT INTO contestants (title, year) VALUES ($1, $2)`, [
+    title,
+    year,
+  ]);
   response.json({ success: true });
 });
 

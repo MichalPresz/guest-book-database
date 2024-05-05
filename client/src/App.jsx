@@ -1,37 +1,38 @@
+import React from "react";
 import { useState, useEffect } from "react";
-import ContestantForm from "./assets/ContestantForm.jsx";
+import SongsForm from "./assets/SongsForm.jsx";
 
 export default function App() {
-  const [contestants, setContestants] = useState([]);
+  const [songs, setSongs] = useState([]);
 
   useEffect(() => {
-    getContestants();
+    getSongs();
   }, []);
-  async function getContestants() {
-    const response = await fetch("http://localhost:8080/contestants");
+  async function getSongs() {
+    const response = await fetch("http://localhost:8080/songs");
     const data = await response.json();
-    setContestants(data);
+    setSongs(data);
   }
 
   return (
     <div>
-      <h1>STOP COOKING!</h1>
-      {contestants.map((contestant) => {
+      <h1>Listen!</h1>
+      {songs.map((song) => {
         return (
-          <div key={contestant.id}>
+          <div key={song.id}>
             <h2>
-              {contestant.name} who is {contestant.age}
+              {song.title} who is {song.year}
             </h2>
-            <p>{contestant.name} is bringing to the kitchen:</p>
+            <p>{song.title} is playing now:</p>
             <ul>
-              {contestant.ingredients.map((ingredient) => {
-                return <li key={ingredient}>{ingredient}</li>;
+              {song.author.map((author) => {
+                return <li key={author}>{author}</li>;
               })}
             </ul>
           </div>
         );
       })}
-      <ContestantForm />
+      <SongsForm />
     </div>
   );
 }
